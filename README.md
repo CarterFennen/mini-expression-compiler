@@ -1,4 +1,3 @@
-```markdown
 # Mini Expression Compiler
 ### From Expression to Evaluation — Java | OOP | Compiler Theory
 
@@ -71,7 +70,6 @@ Error: Syntax Error — Unexpected token '*' at position 3
 ## Grammar
 
 The parser validates expressions against the following context-free grammar, which enforces standard operator precedence:
-
 ```
 E → E + T | E - T | T
 T → T * F | T / F | F
@@ -87,7 +85,6 @@ This structure ensures `*` and `/` bind more tightly than `+` and `-` without an
 ---
 
 ## Project Structure
-
 ```
 mini-expression-compiler/
 ├── src/
@@ -111,7 +108,6 @@ mini-expression-compiler/
 - Java 11 or higher
 
 ### Setup
-
 ```bash
 # Clone the repository
 git clone https://github.com/CarterFennen/mini-expression-compiler.git
@@ -119,14 +115,12 @@ cd mini-expression-compiler
 ```
 
 ### Compile
-
 ```bash
 mkdir out
 javac -d out src/*.java
 ```
 
 ### Run
-
 ```bash
 java -cp out Main
 ```
@@ -149,7 +143,6 @@ You will be prompted to enter an arithmetic expression. The program will print t
 | `3 + (4 - )` | `Error: Unexpected token ')' at position 6` |
 
 ### Run Tests
-
 ```bash
 javac -d out src/*.java test/*.java
 java -cp out CompilerTest
@@ -160,7 +153,6 @@ java -cp out CompilerTest
 ## Error Handling
 
 The compiler produces clear, position-specific error messages for invalid input:
-
 ```
 Input:   3 + (4 - )
 Output:  Syntax Error — Unexpected token ')' at position 6
@@ -214,4 +206,3 @@ CO1023015@wcupa.edu
 ## Course
 
 CSC 220 — Foundations of Computer Science | West Chester University of Pennsylvania
-```
