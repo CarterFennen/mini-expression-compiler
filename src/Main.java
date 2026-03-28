@@ -5,7 +5,7 @@
  * Wires together the Lexer, Parser, and Evaluator into a full compiler pipeline.
  * Prints the token stream, parse result, AST, and evaluated result.
  *
- * @author Carter Fennen
+ * @author Carter & Chosen 
  * @date March 2026
  */
 
@@ -43,6 +43,14 @@ public class Main {
 
         } catch (RuntimeException e) {
             System.out.println("\nError: " + e.getMessage());
+        }
+    }
+
+    // entry point for tree printing
+    private static void printTree(ASTNode node) {
+        List<String> lines = buildLines(node);
+        for (String line : lines) {
+            System.out.println(line);
         }
     }
 
@@ -87,7 +95,4 @@ public class Main {
 
         return lines;
     }
-
-    
-    
 }
