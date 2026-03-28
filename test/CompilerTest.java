@@ -76,23 +76,3 @@ public class CompilerTest {
         }
     }
 }
-```
-
----
-
-## Expected output when you run it
-```
-Running Compiler Tests...
-
-PASS | "3 + 4 * 2" = 11
-PASS | "(3 + 2) * 5 - 1" = 24
-PASS | "(1 + 2) * (3 + 4)" = 21
-PASS | "((3))" = 3
-PASS | "-3 + 5" = 2
-PASS | "10 / 2" = 5
-PASS | "2 + 3 * 4 - 1" = 13
-PASS | "3 + * 5" correctly threw error: ...
-PASS | "()" correctly threw error: ...
-PASS | "3 + (4 - )" correctly threw error: ...
-----------------------------
-Results: 10 passed, 0 failed
