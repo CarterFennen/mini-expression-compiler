@@ -5,61 +5,52 @@
  * @author Chosen Onyejiaka
  * @date   March 2026
  */
- 
+
 import java.util.List;
- 
+
 public class Parser {
- 
+
     private final List<Token> tokens;
     private int pos;
     private boolean parseSuccess;
     private String errorMessage;
- 
+
     public Parser(List<Token> tokens) {
         this.tokens       = tokens;
         this.pos          = 0;
         this.parseSuccess = false;
         this.errorMessage = null;
     }
- 
-    // Runs the parse and returns the AST root, or null on failure
+
+    // Runs the parse and returns the AST root, throws on failure
     public ASTNode parse() {
         if (tokens.isEmpty()) {
-            errorMessage = "Syntax Error — Empty expression";
-            parseSuccess = false;
-            return null;
+            throw new RuntimeException("Syntax Error — Empty expression");
         }
- 
-        try {
-            ASTNode root = parseExpression();
- 
-            if (pos < tokens.size()) {
-                Token extra = tokens.get(pos);
-                throw new RuntimeException(
-                    "Syntax Error — Unexpected token '" + extra.value
-                    + "' at position " + extra.position
-                    + "\n         Expected: end of expression or operator"
-                );
-            }
- 
-            parseSuccess = true;
-            return root;
- 
-        } catch (RuntimeException e) {
-            errorMessage = e.getMessage();
-            parseSuccess = false;
-            return null;
+
+        ASTNode root = parseExpression();
+
+        if (pos < tokens.size()) {
+            Token extra = tokens.get(pos);
+            throw new RuntimeException(
+                "Syntax Error — Unexpected token '" + extra.value
+                + "' at position " + extra.position
+                + "\n         Expected: end of expression or operator"
+            );
         }
+
+        parseSuccess = true;
+        return root;
     }
- 
+
     public boolean isSuccess() {
         return parseSuccess;
     }
- 
+
     public String getErrorMessage() {
         return errorMessage;
     }
- 
+
     // Prints the AST rotated 90° — right subtree on top, left subtree below
     public void printTree(ASTNode root) {
         if (root == null) {
@@ -68,7 +59,7 @@ public class Parser {
         }
         printTreeHelper(root, 0);
     }
- 
+
     private void printTreeHelper(ASTNode node, int level) {
         if (node == null) return;
         printTreeHelper(node.right, level + 1);
@@ -77,15 +68,15 @@ public class Parser {
         System.out.println(indent + node.value);
         printTreeHelper(node.left, level + 1);
     }
- 
+
     // E → T ( ('+' | '-') T )*
     private ASTNode parseExpression() {
         ASTNode left = parseTerm();
- 
+
         while (pos < tokens.size()
                && (peek().type == Token.Type.PLUS
                    || peek().type == Token.Type.MINUS)) {
- 
+
             Token   op     = consume();
             ASTNode right  = parseTerm();
             ASTNode opNode = new ASTNode(op.value);
@@ -93,32 +84,32 @@ public class Parser {
             opNode.right   = right;
             left           = opNode;
         }
- 
+
         return left;
     }
- 
+
     // T → F ( ('*' | '/') F )*
     private ASTNode parseTerm() {
         ASTNode left = parseFactor();
- 
+
         while (pos < tokens.size()
                && (peek().type == Token.Type.STAR
                    || peek().type == Token.Type.SLASH)) {
- 
-            Token   op    = consume();
-            ASTNode right = parseFactor();
+
+            Token   op     = consume();
+            ASTNode right  = parseFactor();
             ASTNode opNode = new ASTNode(op.value);
             opNode.left    = left;
             opNode.right   = right;
             left           = opNode;
         }
- 
+
         return left;
     }
- 
+
     // F → ('-')? ( '(' E ')' | number )
     private ASTNode parseFactor() {
- 
+
         // Unary minus
         if (pos < tokens.size() && peek().type == Token.Type.MINUS) {
             Token unaryOp = consume();
@@ -133,7 +124,7 @@ public class Parser {
             negate.left     = operand;
             return negate;
         }
- 
+
         // Parenthesised sub-expression
         if (pos < tokens.size() && peek().type == Token.Type.LPAREN) {
             Token lparen = consume();
@@ -154,12 +145,12 @@ public class Parser {
             consume();
             return inner;
         }
- 
+
         // Number literal
         if (pos < tokens.size() && peek().type == Token.Type.NUMBER) {
             return new ASTNode(consume().value);
         }
- 
+
         // Nothing matched
         if (pos >= tokens.size()) {
             throw new RuntimeException(
@@ -172,7 +163,7 @@ public class Parser {
             + "' at position " + bad.position + "\n         Expected: number or '('"
         );
     }
- 
+
     private Token peek()    { return tokens.get(pos); }
     private Token consume() { return tokens.get(pos++); }
 }
