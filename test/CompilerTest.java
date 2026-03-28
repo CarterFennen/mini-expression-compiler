@@ -28,7 +28,7 @@ public class CompilerTest {
 
         // --- Error Cases ---
         testError("3 + * 5",    "Unexpected token");
-        testError("()",         "Unexpected token");
+        testError("()",         "Empty parentheses");
         testError("3 + (4 - )", "Unexpected token");
 
         // --- Summary ---
