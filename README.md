@@ -1,3 +1,4 @@
+```markdown
 # Mini Expression Compiler
 ### From Expression to Evaluation — Java | OOP | Compiler Theory
 
@@ -20,6 +21,8 @@ This project builds a compiler pipeline entirely from scratch using core Java an
 ---
 
 ## Sample Input / Output
+
+### Successful Expression
 
 **Input:**
 ```
@@ -46,6 +49,25 @@ Evaluation Result: 24
 
 ---
 
+### Error Expression
+
+**Input:**
+```
+Expression: 3 + * 5
+```
+
+**Output:**
+```
+Tokens: [3, +, *]
+
+Parse Result: FAILED
+
+Error: Syntax Error — Unexpected token '*' at position 3
+       Expected: number or '('
+```
+
+---
+
 ## Grammar
 
 The parser validates expressions against the following context-free grammar, which enforces standard operator precedence:
@@ -67,7 +89,7 @@ This structure ensures `*` and `/` bind more tightly than `+` and `-` without an
 ## Project Structure
 
 ```
-expression-compiler/
+mini-expression-compiler/
 ├── src/
 │   ├── Token.java          # Token types and token representation
 │   ├── Lexer.java          # Tokenizer — converts string to token stream
@@ -77,6 +99,7 @@ expression-compiler/
 │   └── Main.java           # Entry point — runs the full compiler pipeline
 ├── test/
 │   └── CompilerTest.java   # Test cases for each compiler phase
+├── .gitignore
 └── README.md
 ```
 
@@ -98,6 +121,7 @@ cd mini-expression-compiler
 ### Compile
 
 ```bash
+mkdir out
 javac -d out src/*.java
 ```
 
@@ -183,7 +207,6 @@ A `Token` object carries both the type (NUMBER, OPERATOR, PAREN) and the value, 
 **Carter Fennen & Chosen Onyejiaka**
 Computer Science — West Chester University of Pennsylvania
 [GitHub](https://github.com/carterfennen) • carterfennen@icloud.com
-Computer Science - West Chester University of Pennsylvania
 CO1023015@wcupa.edu
 
 ---
@@ -191,3 +214,4 @@ CO1023015@wcupa.edu
 ## Course
 
 CSC 220 — Foundations of Computer Science | West Chester University of Pennsylvania
+```
