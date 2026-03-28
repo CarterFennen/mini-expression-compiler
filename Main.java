@@ -45,14 +45,48 @@ public class Main {
         }
     }
 
-    // recursively prints the AST in a readable tree format
-    private static void printTree(ASTNode node, String indent, boolean isRight) {
-        if (node == null) return;
+    // recursively builds the visual tree as a list of strings
+    private static List<String> buildLines(ASTNode node) {
+        List<String> lines = new ArrayList<>();
+        if (node == null) return lines;
 
-        System.out.println(indent + (isRight ? "└── " : "├── ") + node.value);
-        if (node.left != null || node.right != null) {
-            printTree(node.right, indent + (isRight ? "    " : "│   "), true);
-            printTree(node.left,  indent + (isRight ? "    " : "│   "), false);
+        // leaf node — just return the value
+        if (node.left == null && node.right == null) {
+            lines.add(node.value);
+            return lines;
         }
+
+        List<String> leftLines  = buildLines(node.left);
+        List<String> rightLines = buildLines(node.right);
+
+        int leftWidth  = leftLines.isEmpty()  ? 0 : leftLines.get(0).length();
+        int rightWidth = rightLines.isEmpty() ? 0 : rightLines.get(0).length();
+
+        int totalWidth = leftWidth + 3 + rightWidth;
+        int rootPos    = leftWidth + 1;
+
+        // center the root value on this level
+        StringBuilder root = new StringBuilder(" ".repeat(totalWidth));
+        root.setCharAt(rootPos, node.value.charAt(0));
+        lines.add(root.toString());
+
+        // the / \ branch line
+        StringBuilder slashes = new StringBuilder(" ".repeat(totalWidth));
+        if (rootPos - 1 >= 0)         slashes.setCharAt(rootPos - 1, '/');
+        if (rootPos + 1 < totalWidth) slashes.setCharAt(rootPos + 1, '\\');
+        lines.add(slashes.toString());
+
+        // zip left and right subtree lines side by side
+        int maxLines = Math.max(leftLines.size(), rightLines.size());
+        for (int i = 0; i < maxLines; i++) {
+            String left  = i < leftLines.size()  ? leftLines.get(i)  : " ".repeat(leftWidth);
+            String right = i < rightLines.size() ? rightLines.get(i) : " ".repeat(rightWidth);
+            lines.add(left + "   " + right);
+        }
+
+        return lines;
     }
+
+    
+    
 }
