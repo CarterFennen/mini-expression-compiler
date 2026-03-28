@@ -91,7 +91,7 @@ expression-compiler/
 
 ```bash
 # Clone the repository
-git clone https://github.com/carterfennen/expression-compiler.git
+git clone https://github.com/CarterFennen/mini-expression-compiler.git
 cd mini-expression-compiler
 ```
 
