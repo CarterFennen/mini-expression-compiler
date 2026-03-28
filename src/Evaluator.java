@@ -13,24 +13,26 @@ public class Evaluator {
     // entry point — pass in the root node of the AST
     public int evaluate(ASTNode node) {
 
-        // base case — leaf node, no children, just a number
+        // leaf node — no children, just a number
         if (node.left == null && node.right == null) {
             return Integer.parseInt(node.value);
         }
 
-        // recursive case — evaluate both subtrees first
+        // unary minus — negate the left subtree
+        if (node.value.equals("negate")) {
+            return -evaluate(node.left);
+        }
+
+        // binary operators — evaluate both subtrees first
         int left  = evaluate(node.left);
         int right = evaluate(node.right);
 
-        // apply the operator at this node
         switch (node.value) {
             case "+" -> { return left + right; }
             case "-" -> { return left - right; }
             case "*" -> { return left * right; }
             case "/" -> {
-                if (right == 0) {
-                    throw new RuntimeException("Math Error — Division by zero at position ");
-                }
+                if (right == 0) throw new RuntimeException("Math Error — Division by zero");
                 return left / right;
             }
             default -> throw new RuntimeException("Unknown operator: " + node.value);
