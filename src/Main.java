@@ -9,6 +9,7 @@
  * @date March 2026
  */
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -33,7 +34,7 @@ public class Main {
 
             // Phase 3 — Print AST
             System.out.println("\nParse Tree:");
-            printTree(root, "", true);
+            printTree(root);
 
             // Phase 4 — Evaluation
             Evaluator evaluator = new Evaluator();
