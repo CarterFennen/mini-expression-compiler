@@ -184,7 +184,7 @@ A `Token` object carries both the type (NUMBER, OPERATOR, PAREN) and the value, 
 
 ## Key Concepts Demonstrated
 
-- **Lexical Analysis** — finite automata-inspired tokenization of raw input
+- **Lexical Analysis** — finite tokenization of raw input
 - **Context-Free Grammar** — formal grammar definition and recursive descent implementation
 - **Abstract Syntax Trees** — tree construction, traversal, and evaluation
 - **Object-Oriented Design** — encapsulation, modularity, and separation of concerns across phases
