@@ -176,10 +176,8 @@ Keeping the tree builder and evaluator as separate components follows the single
 **Why model tokens as objects rather than plain strings?**
 A `Token` object carries both the type (NUMBER, OPERATOR, PAREN) and the value, plus position metadata. This makes error messages precise and keeps every downstream component from needing to re-parse raw strings.
 
-**What would I add next?**
+**What would we add next?**
 - Support for floating point numbers and variables
-- A semantic analysis pass that detects division by zero before evaluation
-- An optimization pass that simplifies constant expressions at the AST level (e.g. `2 + 3` → `5` before any traversal)
 - A simple GUI that visually renders the AST as a tree diagram in real time as the user types
 
 ---
