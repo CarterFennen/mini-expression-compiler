@@ -1,16 +1,5 @@
-/**
- * Main.java
- *
- * Entry point for the Mini Expression Compiler.
- * Wires together the Lexer, Parser, and Evaluator into a full compiler pipeline.
- * Prints the token stream, parse result, AST, and evaluated result.
- *
- * @author Carter & Chosen 
- * @date March 2026
- */
-
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -42,13 +31,14 @@ public class Main {
             System.out.println("\nEvaluation Result: " + result);
 
         } catch (RuntimeException e) {
-            System.out.println("\nError: " + e.getMessage());
+            System.out.println("\nParse Result: FAILED");
+            System.out.println("Error: " + e.getMessage());
         }
     }
 
-    // entry point for tree printing
-    private static void printTree(ASTNode node) {
-        List<String> lines = buildLines(node);
+    // prints the visual tree by building lines then printing them
+    private static void printTree(ASTNode root) {
+        List<String> lines = buildLines(root);
         for (String line : lines) {
             System.out.println(line);
         }
@@ -75,9 +65,9 @@ public class Main {
         int rootPos    = leftWidth + 1;
 
         // center the root value on this level
-        StringBuilder root = new StringBuilder(" ".repeat(totalWidth));
-        root.setCharAt(rootPos, node.value.charAt(0));
-        lines.add(root.toString());
+        StringBuilder rootLine = new StringBuilder(" ".repeat(totalWidth));
+        rootLine.setCharAt(rootPos, node.value.charAt(0));
+        lines.add(rootLine.toString());
 
         // the / \ branch line
         StringBuilder slashes = new StringBuilder(" ".repeat(totalWidth));
